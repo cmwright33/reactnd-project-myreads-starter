@@ -1,4 +1,5 @@
 import React from 'react'
+import BookItem from './BookItem.js'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
 
@@ -15,7 +16,10 @@ class BooksApp extends React.Component {
 
   render() {
     return (
+
+    
       <div className="app">
+      {<BookItem/>}
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
