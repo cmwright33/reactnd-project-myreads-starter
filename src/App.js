@@ -39,6 +39,8 @@ class BooksApp extends React.Component {
          .then( (books) => {
           if(Array.isArray(books)){
             this.setState( { bookSearch: books})
+          }else{
+            this.setState( { bookSearch: []})
           }
          })
       })
@@ -46,12 +48,14 @@ class BooksApp extends React.Component {
 
 
   handleChange = (event, book) => {
-      BooksAPI.update(book, book.shelf);
+
       this.newState = event.target.value
       const updateBookshelf = [...this.state.books];
       updateBookshelf.map( (b) => {
           if( b.title === book.title){
+            BooksAPI.update(book, book.shelf);
             return b.shelf = this.newState
+
           }
           return;
       })
@@ -76,7 +80,7 @@ class BooksApp extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                <SearchResults searchResults = {this.state.bookSearch}/>
+                <SearchResults searchResults = {this.state.bookSearch} handleChange = {this.handleChange}/>
                 </ol>
               </div>
             </div>
