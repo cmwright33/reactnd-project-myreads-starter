@@ -67,7 +67,20 @@ class BooksApp extends React.Component {
 
     ]
 
+
+
+
   }
+
+   handleChange = (event, book) => {
+      console.log('Event', event.target.value);
+      this.newState = event.target.value
+      const updateBookshelf = [...this.state.books];
+      updateBookshelf.map( (b) => {
+            return b.shelf = this.newState
+      })
+      this.setState({ books: updateBookshelf });
+   };
 
   render() {
     return (
@@ -101,7 +114,7 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              { <BookShelf books = { this.state.books }/>}
+              { <BookShelf books = { this.state.books } handleChange = {this.handleChange}/>}
             </div>
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>

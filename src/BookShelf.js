@@ -16,6 +16,7 @@ class BookShelf extends Component{
     });
 
 
+
 	render() {
 		return(
 			<div>
@@ -24,7 +25,7 @@ class BookShelf extends Component{
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                     	{this.wantToRead.map( (book, index) => (
- 						<li key= {index}> <BookItem book = { book }/></li>
+ 						<li key= {index}> <BookItem book = { book } handleChange = {this.props.handleChange } /></li>
                     	))}
                     </ol>
                   </div>
@@ -34,7 +35,7 @@ class BookShelf extends Component{
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                     	{this.currentlyReading.map( (book, index) => (
- 						<li key= {index}> <BookItem book = { book }/></li>
+ 						<li key= {index}> <BookItem book = { book } handleChange = {this.props.handleChange } /></li>
                     	))}
                     </ol>
                   </div>
@@ -44,7 +45,7 @@ class BookShelf extends Component{
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                     	{this.read.map( (book, index) => (
- 						<li key= {index}> <BookItem book = { book }/></li>
+ 						<li key= {index}> <BookItem book = { book } handleChange = {this.props.handleChange }/></li>
                     	))}
                     </ol>
                   </div>
