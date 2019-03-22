@@ -1,6 +1,7 @@
 import React from 'react'
 import BookShelf from './BookShelf.js'
 import BookItem from './BookItem.js'
+import SearchResults from './SearchResults.js'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
@@ -40,7 +41,7 @@ class BooksApp extends React.Component {
       BooksAPI.search(this.state.query)
        .then( (books) => {
           console.log(books)
-          // this.setState( { bookSearch: books})
+        this.setState( { bookSearch: books})
        })
     }
   }
@@ -48,7 +49,6 @@ class BooksApp extends React.Component {
 
 
    handleChange = (event, book) => {
-      console.log('Event', event.target.value);
       this.newState = event.target.value
       const updateBookshelf = [...this.state.books];
       updateBookshelf.map( (b) => {
@@ -79,7 +79,7 @@ class BooksApp extends React.Component {
                 */}
 
                 <input type="text" onChange={ (e) => {this.setQuery(e) }} onKeyPress = { (e) => {this.handleInput(e)} } value={this.state.query} placeholder="Search by title or author"/>
-
+                <SearchResults searchResults = {this.state.bookSearch}/>
               </div>
             </div>
             <div className="search-books-results">
