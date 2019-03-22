@@ -3,18 +3,9 @@ import BookItem from './BookItem.js'
 
 class BookShelf extends Component{
 
-	wantToRead = this.props.books.filter( ( book ) => {
-      return book.shelf === "wantToRead"
-    });
+	state: {
 
-    currentlyReading = this.props.books.filter( ( book ) => {
-      return book.shelf === "currentlyReading"
-    });
-
-    read = this.props.books.filter( ( book ) => {
-      return book.shelf === "read"
-    });
-
+	}
 
 
 	render() {
@@ -24,8 +15,10 @@ class BookShelf extends Component{
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    	{this.wantToRead.map( (book, index) => (
- 						<li key= {index}> <BookItem book = { book } handleChange = {this.props.handleChange } /></li>
+                    	{
+							this.props.books.filter((book) => { return book.shelf === "currentlyReading" })
+                    		.map( (book, index) => (
+ 						    <li key= {index}> <BookItem book = { book } handleChange = {this.props.handleChange } /></li>
                     	))}
                     </ol>
                   </div>
@@ -34,7 +27,9 @@ class BookShelf extends Component{
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    	{this.currentlyReading.map( (book, index) => (
+                    	{
+							this.props.books.filter((book) => { return book.shelf === "wantToRead" })
+                    		.map( (book, index) => (
  						<li key= {index}> <BookItem book = { book } handleChange = {this.props.handleChange } /></li>
                     	))}
                     </ol>
@@ -44,7 +39,9 @@ class BookShelf extends Component{
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    	{this.read.map( (book, index) => (
+                    	{
+							this.props.books.filter((book) => { return book.shelf === "read" })
+                    		.map( (book, index) => (
  						<li key= {index}> <BookItem book = { book } handleChange = {this.props.handleChange }/></li>
                     	))}
                     </ol>
