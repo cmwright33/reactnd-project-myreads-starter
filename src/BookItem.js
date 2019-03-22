@@ -8,9 +8,9 @@ class BookItem extends Component{
 	render() {
 
 		return(
-			<div className="book">
+			<div className="book" key={this.props.book.id}>
 	          <div className="book-top">
-	            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.url})` }}></div>
+	            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.imageLinks.thumbnail})` }}></div>
 	            <div className="book-shelf-changer">
 	              <select value={this.props.book.shelf} onChange={ (e) => { this.props.handleChange(e, this.props.book) }} >
 	                <option value="move" disabled>Move to...</option>
@@ -23,9 +23,7 @@ class BookItem extends Component{
 	          </div>
 	          <div className="book-title">{this.props.book.title}</div>
 	          <div className="book-authors">
-	            {this.props.book.authors.map( (author) => (
- 					<div> {author.value} </div>
-                ))}
+	            {this.props.book.authors} 
 	          </div>
 	        </div>
 		)
