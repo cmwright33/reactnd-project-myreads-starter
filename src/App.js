@@ -8,19 +8,13 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
     query: '',
     books: [],
     bookSearch: [], 
 
   }
 
-  searchDebounce = throttle(500, this.searchQuery)
+  searchThrottle = throttle(500, this.searchQuery)
 
   componentDidMount() {
     BooksAPI.getAll()
@@ -47,25 +41,37 @@ class BooksApp extends React.Component {
   }
 
 
-  handleChange = (event, book) => {
+  updateBookshelf = (event, book) => {
 
-      this.newState = event.target.value
-      const updateBookshelf = [...this.state.books];
-      updateBookshelf.map( (b) => {
-          if( b.title === book.title){
-            BooksAPI.update(book, book.shelf);
-            return b.shelf = this.newState
+    const updateBookshelf = [...this.state.books];
+    
+      if ( book.hasOwnProperty('shelf') ){
 
-          }
-          return;
-      })
-      this.setState({ books: updateBookshelf });
-  };
+        const updateBookshelf = [...this.state.books];
+        updateBookshelf.map( (b) => {
+            if( b.id === book.id){
+              BooksAPI.update(book, event.target.value);
+              return b.shelf = event.target.value;
+            }
+            return;
+        })
+        this.setState({ books: updateBookshelf });
+
+      }else{
+
+        book.self = event.target.value
+        BooksAPI.update(book, event.target.value);
+        this.setState(prevState => ({
+          books: [...prevState.books, book]
+        }))
+
+      }
+
+  }
 
   render() {
     return (
 
-     
       <div className="app">
           <Route exact path="/search" render= { () => (
             <div className="search-books">
@@ -80,7 +86,7 @@ class BooksApp extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                <SearchResults searchResults = {this.state.bookSearch} handleChange = {this.handleChange}/>
+                <SearchResults searchResults = {this.state.bookSearch} updateBookshelf = {this.updateBookshelf}/>
                 </ol>
               </div>
             </div>
@@ -91,7 +97,7 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                { <BookShelf books = { this.state.books } handleChange = {this.handleChange}/>}
+                { <BookShelf books = { this.state.books } updateBookshelf = {this.updateBookshelf}/>}
               </div>
               <div className="open-search">
                 <Link 

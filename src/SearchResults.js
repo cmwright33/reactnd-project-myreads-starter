@@ -13,11 +13,10 @@ class SearchResults extends Component {
                 <div className="bookshelf">
                 	<div>No Results</div>
                 </div>
-            
 			)
 
 		}else{
-			console.log(this.props.searchResults)
+			
 		return(
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Results : { this.props.searchResults.length } Books </h2>
@@ -25,7 +24,7 @@ class SearchResults extends Component {
                     <ol className="books-grid">
                       {
                         this.props.searchResults.map( (book) => (
-                         <li key= {book.id} > <BookItem  book = { book } handleChange = {this.props.handleChange } /></li>
+                         <li key= {book.id} > <BookItem  book = { book } updateBookshelf = {this.props.updateBookshelf } /></li>
                         ))
                       }
                     </ol>
