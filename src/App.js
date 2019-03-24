@@ -26,15 +26,25 @@ class BooksApp extends React.Component {
   }
 
 
+  mergeById = (searchResult, bookShelf) =>
+    searchResult.map(itm => ({
+        ...bookShelf.find((item) => (item.id === itm.id) && item),
+        ...itm
+    }));
+
+
   searchQuery = (event) => {
       this.setState( { query: event.target.value }, () => {
 
         if(this.state.query.length > 0){
 
           BooksAPI.search(this.state.query)
-           .then( (books) => {
+            .then( (books) => {
             if(Array.isArray(books)){
-              this.setState( { bookSearch: books})
+              // merge data returned with current bookshelf (adding a shelf value if we all ready have on) 
+              let mergedList = this.mergeById(books, this.state.books);
+           
+              this.setState( { bookSearch: mergedList})
             }else{
               this.setState( { bookSearch: []})
             }
@@ -75,7 +85,7 @@ class BooksApp extends React.Component {
 
         BooksAPI.update(book, event.target.value);
 
-        // add new book to
+        // add new book to both arrays
         this.setState(prevState => ({
 
           books: [...prevState.books, book],

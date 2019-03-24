@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BookItem from './BookItem.js'
+import BookItem from './BookItem.js';
 
 
 class SearchResults extends Component {
@@ -79,5 +79,7 @@ class SearchResults extends Component {
 	}
 
 }
+
+
 
 export default SearchResults;

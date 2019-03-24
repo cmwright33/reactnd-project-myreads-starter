@@ -2,14 +2,21 @@ import React, { Component } from 'react';
 
 class BookItem extends Component{
 
+	// is this the search page?
 	isSearchPage = this.props.isSearchPage
-	selectedShelf = this.props.book.shelf !== undefined ? this.props.book.shelf : 'none';
+
+	// Error Handling
+	// if no shelf is available assign none
+	selectedShelf = this.props.book.shelf !== undefined ? this.props.book.shelf : "none";
+	// if no thumbnails are available serve a dumb image url
 	thumbnailSelected = this.props.book.imageLinks !== undefined ? this.props.book.imageLinks.thumbnail : "https://dummyimage.com/128x193/000/fff.png";
+	// if no authors are available serve nothing
 	authorFound = this.props.book.authors !== undefined ? this.props.book.authors : [" "];
 
 
 
 	render() {
+
 
 	if(this.isSearchPage) {
 			return(
