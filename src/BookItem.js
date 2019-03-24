@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+/**
+* @description Represents single book
+* @constructor
+*/
+
 class BookItem extends Component{
 
 	// is this the search page?

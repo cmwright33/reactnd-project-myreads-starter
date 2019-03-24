@@ -13,8 +13,10 @@ class BooksApp extends React.Component {
     bookSearch: [], 
   }
 
+  //throttle search results
   searchThrottle = throttle(500, this.searchQuery)
 
+  //once component mounts pull book data
   componentDidMount() {
     BooksAPI.getAll()
       .then((books) => {
@@ -25,6 +27,12 @@ class BooksApp extends React.Component {
 
   }
 
+  /**
+  * @description merges two arrays of objects (updating the results to reflect shelf data)
+  * @param {Array} searchResult -- Data from BooksAPI
+  * @param {Array} bookShelf -- state array books
+  * @returns {array} merged array of objects 
+  */
 
   mergeById = (searchResult, bookShelf) =>
     searchResult.map(itm => ({
@@ -32,6 +40,11 @@ class BooksApp extends React.Component {
         ...itm
     }));
 
+  /**
+  * @description pull search input and sets bookSearch state array
+  * @param {event}  Data from BooksAPI
+  * @returns {nothing} 
+  */
 
   searchQuery = (event) => {
       this.setState( { query: event.target.value }, () => {
@@ -54,6 +67,13 @@ class BooksApp extends React.Component {
   }
 
 
+  /**
+  * @description update bookshelf with update book.shelf value
+  * @param {event}  selected value
+  * @param {book}  book selected
+  * @returns {nothing} 
+  */
+
   updateBookshelf = (event, book) => {
 
         const updateBookshelf = [...this.state.books];
@@ -70,6 +90,13 @@ class BooksApp extends React.Component {
         });
         this.setState({ books: updateBookshelf });
     }
+
+  /**
+  * @description add book to bookshelf from search results
+  * @param {event}  selected value
+  * @param {book}  book selected
+  * @returns {nothing} 
+  */
 
   addToBookshelf = (event, book) => {
 

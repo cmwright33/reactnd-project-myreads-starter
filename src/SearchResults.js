@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import BookItem from './BookItem.js';
 
 
+/**
+* @description Represents output of Search Results with bookshelf selections
+* @constructor
+*/
+
 class SearchResults extends Component {
 
 	isSearchPage = true;

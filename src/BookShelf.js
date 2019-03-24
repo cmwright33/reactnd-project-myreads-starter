@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import BookItem from './BookItem.js'
 
+/**
+* @description output of books and ordered under bookshelfs
+* @constructor
+*/
+
+
 class BookShelf extends Component{
 
 	state: {
