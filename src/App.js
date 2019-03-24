@@ -32,6 +32,7 @@ class BooksApp extends React.Component {
   * @param {Array} searchResult -- Data from BooksAPI
   * @param {Array} bookShelf -- state array books
   * @returns {array} merged array of objects 
+  * helper function created with assitance of SO -- 03/24/2019 -- https://stackoverflow.com/questions/46849286/merge-two-array-of-objects-based-on-a-key/46849485
   */
 
   mergeById = (searchResult, bookShelf) =>
