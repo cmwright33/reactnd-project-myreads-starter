@@ -2,7 +2,7 @@ import React from 'react'
 import BookShelf from './BookShelf.js'
 import SearchResults from './SearchResults.js'
 import * as BooksAPI from './BooksAPI'
-import { throttle, debounce } from 'throttle-debounce';
+import { throttle } from 'throttle-debounce';
 import { Route, Link } from 'react-router-dom'
 import './App.css'
 
@@ -11,7 +11,6 @@ class BooksApp extends React.Component {
     query: '',
     books: [],
     bookSearch: [], 
-
   }
 
   searchThrottle = throttle(500, this.searchQuery)
@@ -21,53 +20,70 @@ class BooksApp extends React.Component {
       .then((books) => {
         this.setState(() => ({
           books
-        }))
-    })
+        }));
+    });
 
   }
 
 
   searchQuery = (event) => {
       this.setState( { query: event.target.value }, () => {
-        BooksAPI.search(this.state.query)
-         .then( (books) => {
-          if(Array.isArray(books)){
-            this.setState( { bookSearch: books})
-          }else{
-            this.setState( { bookSearch: []})
-          }
-         })
-      })
+
+        if(this.state.query.length > 0){
+
+          BooksAPI.search(this.state.query)
+           .then( (books) => {
+            if(Array.isArray(books)){
+              this.setState( { bookSearch: books})
+            }else{
+              this.setState( { bookSearch: []})
+            }
+           });
+        }
+      });
   }
 
 
   updateBookshelf = (event, book) => {
 
-    const updateBookshelf = [...this.state.books];
-    
-      if ( book.hasOwnProperty('shelf') ){
-
         const updateBookshelf = [...this.state.books];
-        updateBookshelf.map( (b) => {
+
+        updateBookshelf.forEach( (b) => {
+
+            // if book matches book being updated, update
             if( b.id === book.id){
+
               BooksAPI.update(book, event.target.value);
-              return b.shelf = event.target.value;
+              b.shelf = event.target.value;
             }
-            return;
-        })
+
+        });
         this.setState({ books: updateBookshelf });
+    }
 
-      }else{
+  addToBookshelf = (event, book) => {
 
-        book.self = event.target.value
+        const updateResults = [...this.state.bookSearch];
+        book.shelf = event.target.value
+
+        // remove and re-add new book
+        updateResults.filter( oldBook => {
+
+          return book.id !== oldBook.id
+
+        }).concat([book]);
+
         BooksAPI.update(book, event.target.value);
+
+        // add new book to
         this.setState(prevState => ({
-          books: [...prevState.books, book]
-        }))
+
+          books: [...prevState.books, book],
+          bookSearch: updateResults
+
+        }));
 
       }
-
-  }
 
   render() {
     return (
@@ -86,7 +102,7 @@ class BooksApp extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                <SearchResults searchResults = {this.state.bookSearch} updateBookshelf = {this.updateBookshelf}/>
+                <SearchResults searchResults = {this.state.bookSearch} addToBookshelf = {this.addToBookshelf}/>
                 </ol>
               </div>
             </div>
