@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /**
-* @description Represents single book
+* @description Represents a single book
 * @constructor
 */
 
