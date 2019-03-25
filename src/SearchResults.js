@@ -32,7 +32,7 @@ class SearchResults extends Component {
                       {
                        	this.props.searchResults.filter((book) => { return !book.hasOwnProperty('shelf') })
                     		.map( (book) => (
-                         <li key= {book.id} > <BookItem  book = { book } addToBookshelf = {this.props.addToBookshelf} isSearchPage = {this.isSearchPage} /></li>
+                         <li key= {book.id} > <BookItem  book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch} isSearchPage = {this.isSearchPage} /></li>
                         ))
                       }
                     </ol>
@@ -45,7 +45,7 @@ class SearchResults extends Component {
                     	{
 							this.props.searchResults.filter((book) => { return book.shelf === "currentlyReading" })
                     		.map( (book) => (
- 						    	<li key= {book.id} > <BookItem  book = { book } addToBookshelf = {this.props.addToBookshelf } isSearchPage = {this.isSearchPage} /></li>
+ 						    	<li key= {book.id} > <BookItem  book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch } isSearchPage = {this.isSearchPage} /></li>
                     		))
                     	}
                     </ol>
@@ -58,7 +58,7 @@ class SearchResults extends Component {
                     	{
 							this.props.searchResults.filter((book) => { return book.shelf === "wantToRead" })
                     		.map( (book) => (
- 								<li key= {book.id} > <BookItem  book = { book } addToBookshelf = {this.props.addToBookshelf } isSearchPage = {this.isSearchPage} /></li>
+ 								<li key= {book.id} > <BookItem  book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch } isSearchPage = {this.isSearchPage} /></li>
                     		))
                     	}
                     </ol>
@@ -71,7 +71,7 @@ class SearchResults extends Component {
                     	{
 							this.props.searchResults.filter((book) => { return book.shelf === "read" })
                     		.map( (book) => (
- 								<li key= {book.id}> <BookItem book = { book } addToBookshelf = {this.props.addToBookshelf } isSearchPage = {this.isSearchPage} /></li>
+ 								<li key= {book.id}> <BookItem book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch } isSearchPage = {this.isSearchPage} /></li>
                     		))
                     	}
                     </ol>

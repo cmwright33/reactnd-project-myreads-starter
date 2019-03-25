@@ -69,39 +69,14 @@ class BooksApp extends React.Component {
       });
   }
 
-
   /**
-  * @description update bookshelf with update book.shelf value
+  * @description update book in bookshelf and update search results
   * @param {event}  selected value
   * @param {book}  book selected
   * @returns {nothing} 
   */
 
-  updateBookshelf = (event, book) => {
-
-        const updateBookshelf = [...this.state.books];
-
-        updateBookshelf.forEach( (b) => {
-
-            // if book matches book being updated, update
-            if( b.id === book.id){
-
-              BooksAPI.update(book, event.target.value);
-              b.shelf = event.target.value;
-            }
-
-        });
-        this.setState({ books: updateBookshelf });
-    }
-
-  /**
-  * @description add book to bookshelf from search results
-  * @param {event}  selected value
-  * @param {book}  book selected
-  * @returns {nothing} 
-  */
-
-  addToBookshelf = (event, book) => {
+  updateBookshelfAndSearch = (event, book) => {
 
         // remove and re-add new book
         const updateResults = [...this.state.bookSearch].filter( oldBook => {
@@ -117,21 +92,25 @@ class BooksApp extends React.Component {
 
           }).concat([book]);
 
-        book.shelf = event.target.value
+        if(this.state.bookSearch.length > 0){
 
+          book.shelf = event.target.value
 
-        BooksAPI.update(book, event.target.value)
-        .then( () => {
+          BooksAPI.update(book, event.target.value)
+          .then( () => {
 
-          // add new book to both arrays
-          this.setState(prevState => ({
+            // add new book to both arrays
+            this.setState(prevState => ({
 
-            books: [...updateBookshelfs, book],
-            bookSearch: updateResults
+              books: updateBookshelfs,
+              bookSearch: updateResults
 
-          }));
+            }));
 
-        });
+          });
+
+        }
+
       }
 
   render() {
@@ -151,7 +130,7 @@ class BooksApp extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                <SearchResults searchResults = {this.state.bookSearch} addToBookshelf = {this.addToBookshelf}/>
+                <SearchResults searchResults = {this.state.bookSearch} updateBookshelfAndSearch = {this.updateBookshelfAndSearch}/>
                 </ol>
               </div>
             </div>
@@ -162,7 +141,7 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                { <BookShelf books = { this.state.books } updateBookshelf = {this.updateBookshelf}/>}
+                { <BookShelf books = { this.state.books } updateBookshelfAndSearch = {this.updateBookshelfAndSearch}/>}
               </div>
               <div className="open-search">
                 <Link 

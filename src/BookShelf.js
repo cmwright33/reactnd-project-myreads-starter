@@ -24,7 +24,7 @@ class BookShelf extends Component{
                     	{
 							this.props.books.filter((book) => { return book.shelf === "currentlyReading" })
                     		.map( (book) => (
- 						    	<li key= {book.id} > <BookItem  book = { book } updateBookshelf = {this.props.updateBookshelf } /></li>
+ 						    	<li key= {book.id} > <BookItem  book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch } /></li>
                     		))
                     	}
                     </ol>
@@ -37,7 +37,7 @@ class BookShelf extends Component{
                     	{
 							this.props.books.filter((book) => { return book.shelf === "wantToRead" })
                     		.map( (book) => (
- 								<li key= {book.id} > <BookItem  book = { book } updateBookshelf = {this.props.updateBookshelf } /></li>
+ 								<li key= {book.id} > <BookItem  book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch } /></li>
                     		))
                     	}
                     </ol>
@@ -50,7 +50,7 @@ class BookShelf extends Component{
                     	{
 							this.props.books.filter((book) => { return book.shelf === "read" })
                     		.map( (book) => (
- 								<li key= {book.id}> <BookItem book = { book } updateBookshelf = {this.props.updateBookshelf }/></li>
+ 								<li key= {book.id}> <BookItem book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch }/></li>
                     		))
                     	}
                     </ol>
