@@ -63,6 +63,8 @@ class BooksApp extends React.Component {
               this.setState( { bookSearch: []})
             }
            });
+        }else{
+            this.setState( { bookSearch: []})
         }
       });
   }
@@ -101,26 +103,35 @@ class BooksApp extends React.Component {
 
   addToBookshelf = (event, book) => {
 
-        const updateResults = [...this.state.bookSearch];
-        book.shelf = event.target.value
-
         // remove and re-add new book
-        updateResults.filter( oldBook => {
+        const updateResults = [...this.state.bookSearch].filter( oldBook => {
 
           return book.id !== oldBook.id
 
         }).concat([book]);
 
-        BooksAPI.update(book, event.target.value);
+        // remove and re-add new book
+        const updateBookshelfs = [...this.state.books].filter( bookOnShelf => { 
 
-        // add new book to both arrays
-        this.setState(prevState => ({
+            return book.id !== bookOnShelf.id
 
-          books: [...prevState.books, book],
-          bookSearch: updateResults
+          }).concat([book]);
 
-        }));
+        book.shelf = event.target.value
 
+
+        BooksAPI.update(book, event.target.value)
+        .then( () => {
+
+          // add new book to both arrays
+          this.setState(prevState => ({
+
+            books: [...updateBookshelfs, book],
+            bookSearch: updateResults
+
+          }));
+
+        });
       }
 
   render() {
