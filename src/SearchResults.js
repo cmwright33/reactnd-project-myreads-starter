@@ -9,7 +9,12 @@ import BookItem from './BookItem.js';
 
 class SearchResults extends Component {
 
-	isSearchPage = true;
+  shelves = [
+     { title: "Results", slug: undefined },
+     { title: "Currently Reading", slug: "currentlyReading" },
+     { title: "Want to Read", slug: "wantToRead" },
+     { title: "Read", slug: "read" },
+    ]
 
 	render(){
 
