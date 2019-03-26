@@ -13,6 +13,11 @@ class BooksApp extends React.Component {
     bookSearch: [], 
   }
 
+  shelves = [
+   { title: "Currently Reading", slug: "currentlyReading" },
+   { title: "Want to Read", slug: "wantToRead" },
+   { title: "Read", slug: "read" },
+  ]
   //throttle search results
   searchThrottle = throttle(500, this.searchQuery)
 
@@ -130,7 +135,11 @@ class BooksApp extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                <SearchResults searchResults = {this.state.bookSearch} updateBookshelfAndSearch = {this.updateBookshelfAndSearch}/>
+                <SearchResults 
+                  searchResults = {this.state.bookSearch} 
+                  updateBookshelfAndSearch = {this.updateBookshelfAndSearch}
+                  shelves = { this.shelves }
+                  />
                 </ol>
               </div>
             </div>
@@ -141,7 +150,11 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                { <BookShelf books = { this.state.books } updateBookshelfAndSearch = {this.updateBookshelfAndSearch}/>}
+                { <BookShelf 
+                  books = { this.state.books } 
+                  updateBookshelfAndSearch = {this.updateBookshelfAndSearch} 
+                  shelves = { this.shelves }
+                />}
               </div>
               <div className="open-search">
                 <Link 

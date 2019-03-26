@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BookItem from './BookItem.js'
+import Shelf from './Shelf.js'
 
 
 
@@ -11,32 +12,20 @@ import BookItem from './BookItem.js'
 
 class BookShelf extends Component{
 
-  shelves = [
-   { title: "Currently Reading", slug: "currentlyReading" },
-   { title: "Want to Read", slug: "wantToRead" },
-   { title: "Read", slug: "read" },
-  ]
-
-
 	render() {
    return (
       <div>
        {
-        this.shelves.map( (shelf, index) => {
+        this.props.shelves.map( (shelf, index) => {
         return(
-          <div key={index}className="bookshelf">
-            <h2 className="bookshelf-title">{shelf.title}</h2>
-            <div className="bookshelf-books">
-            <ol className="books-grid">  
+            <Shelf shelf = { shelf } key = { index } >
               {
                 this.props.books.filter((book) => { return book.shelf === shelf.slug })
                 .map( (book) => (
                  <li key= {book.id} > <BookItem  book = { book } updateBookshelfAndSearch = {this.props.updateBookshelfAndSearch} isSearchPage = {this.isSearchPage} /></li>
                 ))
               }        
-              </ol>
-            </div>
-          </div>
+            </Shelf>
           )
       }) 
       }
